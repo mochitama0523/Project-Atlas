@@ -11,21 +11,21 @@ namespace Atlas
 		Window();
 		virtual ~Window() = default;
 
-		bool Create(int _width, int _height, std::wstring _windowTitle, std::wstring _className);
+		bool Create(int width, int height, std::wstring windowTitle, std::wstring className);
 		void Show();
-		void Show(int _nCmdShow);
+		void Show(int nCmdShow);
 		bool ProcessMessage();
 		HWND GetWindowHandle() const;
 
 		//派生クラスでカスタマイズ可能
-		virtual LRESULT LocalWindowProc(HWND _hWnd, UINT _msg, WPARAM _wParam, LPARAM _lParam);
+		virtual LRESULT LocalWindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 	protected:
 		HWND m_hWnd;
 		HINSTANCE m_hInstance;
 
 	private:
-		static LRESULT CALLBACK StaticWindowProc(HWND _hWnd, UINT _msg, WPARAM _wParam, LPARAM _lParam);
-		void SetPointer(HWND _hWnd);
+		static LRESULT CALLBACK StaticWindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		void SetPointer(HWND hWnd);
 	};
 }
