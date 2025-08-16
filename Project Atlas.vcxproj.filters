@@ -16,25 +16,34 @@
     <Filter Include="Engine\Graphics\RenderAPI">
       <UniqueIdentifier>{88dba170-a400-441b-aa38-b7e0728f09c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Graphics\RenderAPI\DX11">
-      <UniqueIdentifier>{139cf464-8bca-49e0-a2e0-c613254ccaa1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Test">
       <UniqueIdentifier>{a4952538-41b2-443b-a0c9-da9be195067e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Common">
       <UniqueIdentifier>{92845372-3bd3-4ab1-b833-e82b24e5addf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Graphics\RenderAPI\DX11">
+      <UniqueIdentifier>{d40f6146-0a68-4318-bf93-37d2a97d3b2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine\Platform\Win32\Window.cpp">
       <Filter>Engine\Platform\Win32</Filter>
     </ClCompile>
+    <ClCompile Include="Test.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\RenderAPI\IRenderAPI.cpp">
+      <Filter>Engine\Graphics\RenderAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Graphics\RenderAPI\DX11\DX11VertexBuffer.cpp">
+      <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.cpp">
       <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
-      <Filter>Test</Filter>
+    <ClCompile Include="Source\Engine\Graphics\RenderAPI\DX11\DX11IndexBuffer.cpp">
+      <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,11 +53,29 @@
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\IRenderAPI.h">
       <Filter>Engine\Graphics\RenderAPI</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Engine\Common\IWindowHandle.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\IViewport.h">
+      <Filter>Engine\Graphics\RenderAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\IVertexBuffer.h">
+      <Filter>Engine\Graphics\RenderAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\IIndexBuffer.h">
+      <Filter>Engine\Graphics\RenderAPI</Filter>
+    </ClInclude>
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.h">
       <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Engine\Common\IWindowHandle.h">
-      <Filter>Engine\Common</Filter>
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\BackEnd.h">
+      <Filter>Engine\Graphics\RenderAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11VertexBuffer.h">
+      <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11IndexBuffer.h">
+      <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -127,14 +127,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Graphics\RenderAPI\DX11\DX11IndexBuffer.cpp" />
     <ClCompile Include="Source\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\RenderAPI\DX11\DX11VertexBuffer.cpp" />
+    <ClCompile Include="Source\Engine\Graphics\RenderAPI\IRenderAPI.cpp" />
     <ClCompile Include="Source\Engine\Platform\Win32\Window.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Engine\Common\IWindowHandle.h" />
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11IndexBuffer.h" />
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.h" />
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11VertexBuffer.h" />
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\IIndexBuffer.h" />
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\IRenderAPI.h" />
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\IVertexBuffer.h" />
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\IViewport.h" />
+    <ClInclude Include="Include\Engine\Graphics\RenderAPI\BackEnd.h" />
     <ClInclude Include="Include\Engine\Platform\Win32\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

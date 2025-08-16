@@ -1,5 +1,5 @@
-#include "Engine\Platform\Win32\Window.h"
-#include <iostream>
+#include "Engine/Platform/Win32/Window.h"
+#include "Engine/Graphics/RenderAPI/IRenderAPI.h"
 
 using namespace Atlas;
 
@@ -9,8 +9,12 @@ int main()
 	window.Create(640, 480, TEXT("Test"), TEXT("Test"));
 	window.Show();
 
-	while(window.ProcessMessage())
+	auto renderer = IRenderAPI::Create(BackEnd::DirectX11);
+	renderer->Initialize(window.GetWindowHandle(), 640, 480);
+
+	while (window.ProcessMessage())
 	{
-		Sleep(1000);
+		renderer->BeginFrame(0.f, 1.f, 0.f, 1.f);
+		renderer->EndFrame(true);
 	}
 }

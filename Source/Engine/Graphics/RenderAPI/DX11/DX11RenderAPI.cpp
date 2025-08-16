@@ -1,5 +1,8 @@
 #include "Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.h"
 #include "Engine/Common/IWindowHandle.h"
+#include "Engine/Graphics/RenderAPI/DX11/DX11VertexBuffer.h"
+#include "Engine/Graphics/RenderAPI/DX11/DX11IndexBuffer.h"
+#include "Engine/Graphics/RenderAPI/IViewport.h"
 #include <d3d11_4.h>
 #include <winrt/base.h>
 #include <winrt/Windows.Foundation.h>
@@ -60,11 +63,20 @@ namespace
 	}
 }
 
+bool DX11RenderAPI::Initialize(void* _hWnd, uint32_t _width, uint32_t _height)
+{
+	IWindowHandle iHWnd;
+	iHWnd.SetWindowHandle(_hWnd);
+	iHWnd.SetPlatform(IWindowHandle::Platform::Win32);
+
+	return Initialize(iHWnd, _width, _height);
+}
+
 bool DX11RenderAPI::Initialize(IWindowHandle _window, uint32_t _width, uint32_t _height)
 {
 	//デバイス/コンテキストの作成、インターフェイスのアップグレードをしてメンバ変数へセット
 	auto deviceAndContext = GetOrShowError(CreateDevice(), L"デバイスの作成に失敗しました。");
-	auto deviceAndContext2 = GetOrShowError(UpgradeDeviceAndContext2(deviceAndContext), L"デバイスのアップグレードに失敗。");
+	auto deviceAndContext2 = GetOrShowError(UpgradeDeviceAndContext2(deviceAndContext), L"デバイスのアップグレードに失敗しました。");
 	this->SetDeviceAndContext(deviceAndContext2);
 
 	//スワップチェインを作成してメンバ変数へセット
@@ -74,6 +86,9 @@ bool DX11RenderAPI::Initialize(IWindowHandle _window, uint32_t _width, uint32_t 
 	//レンダーターゲットビューを作成し、メンバ配列へ追加
 	auto renderTargetView = GetOrShowError(CreateRenderTargetView(m_device, m_swapChain), L"RTVの作成に失敗しました。");
 	this->m_renderTargetViews.push_back(renderTargetView);
+
+	//プリミティブを設定（他のAPIとの整合性を保つため、三角形リスト固定）
+	m_deviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	return true;
 }
@@ -217,7 +232,7 @@ DX11RenderAPI::SwapChainResult DX11RenderAPI::CreateSwapChainForHWND(
 {
 	ComPtr<IDXGISwapChain1> swapChain;
 
-	auto hwnd = reinterpret_cast<HWND*>(_window.GetNativeWindowHandle());
+	auto hwnd = reinterpret_cast<HWND>(_window.GetNativeWindowHandle());
 	if (!hwnd) { return std::unexpected(E_POINTER); }
 
 	//ファクトリは毎回デバイスから取得したほうが安全
@@ -225,7 +240,7 @@ DX11RenderAPI::SwapChainResult DX11RenderAPI::CreateSwapChainForHWND(
 
 	HRESULT hr = factory->CreateSwapChainForHwnd(
 		_device.Get(),
-		*hwnd,
+		hwnd,
 		&_desc,
 		nullptr,
 		nullptr,
@@ -300,29 +315,11 @@ DX11RenderAPI::RenderTargetViewResult DX11RenderAPI::CreateRenderTargetView(
 	return renderTargetView;
 }
 
-D3D11_VIEWPORT DX11RenderAPI::CreateViewport(
-	uint32_t _width,
-	uint32_t _height,
-	uint32_t _startWidth,
-	uint32_t _startHeight) const
-{
-	D3D11_VIEWPORT viewport =
-	{
-		.TopLeftX = static_cast<float>(_startWidth),
-		.TopLeftY = static_cast<float>(_startHeight),
-		.Width = static_cast<float>(_width),
-		.Height = static_cast<float>(_height),
-		.MinDepth = D3D11_MIN_DEPTH,
-		.MaxDepth = D3D11_MAX_DEPTH
-	};
-
-	return viewport;
-}
-
 void DX11RenderAPI::BeginFrame(float _r, float _g, float _b, float _a)
 {
 	const float clearColor[4] = { _r,_g,_b,_a };
 
+	//ComPtrのvectorを生ポインタの配列に変換しなければAPIに渡せない
 	std::vector<ID3D11RenderTargetView*> pointers;
 	pointers.reserve(m_renderTargetViews.size());
 
@@ -346,4 +343,55 @@ void DX11RenderAPI::BeginFrame(float _r, float _g, float _b, float _a)
 void DX11RenderAPI::EndFrame(bool _enableVSync)
 {
 	m_swapChain->Present(_enableVSync ? 1 : 0, 0);
+}
+
+void DX11RenderAPI::BindVertexBuffer(const IVertexBuffer& _buffer)
+{
+	//間違ったAPIのバッファを渡せないように、IVertexBufferはIRenderAPI経由でしか
+	//作成できないようにしているので、static_castしても問題ない。
+	const auto& dx11Buf = static_cast<const DX11VertexBuffer&>(_buffer);
+	const auto& dx11Impl = static_cast<const DX11VertexBuffer::Impl&>(*dx11Buf.m_impl);
+
+	ID3D11Buffer* buffer = dx11Impl.m_buffer.Get();
+	UINT strides = sizeof(Vertex);
+	UINT offset = 0;
+
+	m_deviceContext->IASetVertexBuffers(
+		0,
+		1,
+		&buffer,
+		&strides,
+		&offset
+	);
+}
+
+void DX11RenderAPI::BindIndexBuffer(const IIndexBuffer& _buffer)
+{
+	//間違ったAPIのバッファを渡せないように、IIndexBufferはIRenderAPI経由でしか
+	//作成できないようにしているので、static_castしても問題ない。
+	const auto& dx11Buf = static_cast<const DX11IndexBuffer&>(_buffer);
+	const auto& dx11Impl = static_cast<const DX11IndexBuffer::Impl&>(*dx11Buf.m_impl);
+
+	ID3D11Buffer* buffer = dx11Impl.m_buffer.Get();
+
+	m_deviceContext->IASetIndexBuffer(
+		buffer,
+		DXGI_FORMAT_R32_UINT,
+		0
+	);
+}
+
+void DX11RenderAPI::BindViewport(const IViewport& _viewport)
+{
+	D3D11_VIEWPORT viewport =
+	{
+		.TopLeftX = static_cast<float>(_viewport.startX),
+		.TopLeftY = static_cast<float>(_viewport.startY),
+		.Width = static_cast<float>(_viewport.width),
+		.Height = static_cast<float>(_viewport.height),
+		.MinDepth = D3D11_MIN_DEPTH,
+		.MaxDepth = D3D11_MAX_DEPTH
+	};
+
+	m_deviceContext->RSSetViewports(1, &viewport);
 }

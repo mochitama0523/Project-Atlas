@@ -33,8 +33,13 @@ namespace Atlas
 		using UpgradeDevice2Result = std::expected<DeviceAndContext2, HRESULT>;
 
 		bool Initialize(IWindowHandle hWnd, uint32_t width, uint32_t height) override;
+		bool Initialize(void* hWnd, uint32_t width, uint32_t height) override;
 		void BeginFrame(float r, float g, float b, float a) override;
 		void EndFrame(bool enableVSync) override;
+		
+		void BindVertexBuffer(const IVertexBuffer& buffer) override;
+		void BindIndexBuffer(const IIndexBuffer& buffer) override;
+		void BindViewport(const IViewport& viewport) override;
 
 	private:
 		//D3D11デバイス、デバイスコンテキストの作成
@@ -75,13 +80,6 @@ namespace Atlas
 		RenderTargetViewResult CreateRenderTargetView(
 			const ComPtr<ID3D11Device>& device,
 			const ComPtr<IDXGISwapChain1>& swapChain) const;
-
-		//ビューポートの作成
-		D3D11_VIEWPORT CreateViewport(
-			uint32_t width,
-			uint32_t height,
-			uint32_t startWidth = 0,
-			uint32_t startHeight = 0) const;
 
 		ComPtr<ID3D11Device2> m_device;
 		ComPtr<ID3D11DeviceContext2> m_deviceContext;
