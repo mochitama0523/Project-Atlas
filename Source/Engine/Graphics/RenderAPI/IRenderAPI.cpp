@@ -1,5 +1,6 @@
 #include "Engine/Graphics/RenderAPI/IRenderAPI.h"
 #include "Engine/Graphics/RenderAPI/DX11/DX11RenderAPI.h"
+#include "Engine/Common/Vertex.h"
 #include <stdexcept>
 
 using namespace Atlas;

@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Engine\Common\IWindowHandle.h" />
+    <ClInclude Include="Include\Engine\Common\Vertex.h" />
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11IndexBuffer.h" />
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.h" />
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11VertexBuffer.h" />

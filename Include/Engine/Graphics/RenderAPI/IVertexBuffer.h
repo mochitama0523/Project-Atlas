@@ -1,19 +1,16 @@
 #pragma once
-#include <memory>
 
 //VertexBufferを抽象化し、APIに依存しない形にするインターフェイス
 //IRenderAPI経由で使用しているAPIの種類に応じた実態を作成します。
+//IRenderAPI経由以外で作成できないのは、安全性を保つためです。
 
 namespace Atlas {
-
-class Vertex;
 
 class IVertexBuffer
 {
 protected:
 	IVertexBuffer() = default;
-	struct Impl {};
-	std::unique_ptr<Impl> m_impl;
+	virtual ~IVertexBuffer() = default;
 
 private:
 	IVertexBuffer(const IVertexBuffer&) = delete;
@@ -23,3 +20,9 @@ private:
 };
 
 } //namespace Atlas
+
+/*
+* Project Atlas Graphics Library
+* Copyright (c) 2025 Haruki Kurokawa
+*/
+

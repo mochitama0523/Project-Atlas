@@ -41,6 +41,9 @@ namespace Atlas
 		void BindIndexBuffer(const IIndexBuffer& buffer) override;
 		void BindViewport(const IViewport& viewport) override;
 
+		std::unique_ptr<IVertexBuffer> CreateVertexBuffer(const Vertices& vertices) override;
+		std::unique_ptr<IIndexBuffer> CreateIndexBuffer(const std::vector<uint32_t>& indices) override;
+
 	private:
 		//D3D11デバイス、デバイスコンテキストの作成
 		CreateDeviceResult CreateDevice() const;

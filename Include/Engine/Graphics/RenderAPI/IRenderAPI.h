@@ -1,7 +1,8 @@
 #pragma once
 #include "Engine/Graphics/RenderAPI/BackEnd.h"
-#include <cstdint>
+#include "Engine/Common/Vertex.h"
 #include <memory>
+#include <vector>
 
 //DirectXなどのグラフィックAPIを抽象化し、APIを隠蔽するインターフェイス。
 //CreateメソッドでAPIを選択し、インターフェイスを取得して使用を開始します。
@@ -29,6 +30,12 @@ public:
 	//描画した内容を画面に表示します。垂直同期フラグを引数で指定します。
 	virtual void EndFrame(bool enableVSync) = 0;
 
+	//頂点バッファを作成します。型はVertex.hで定義されているものの中から自由に選べます。
+	virtual std::unique_ptr<IVertexBuffer> CreateVertexBuffer(const Vertices& vertices) = 0;
+
+	//インデックスバッファを作成します。
+	virtual std::unique_ptr<IIndexBuffer> CreateIndexBuffer(const std::vector<uint32_t>& indices) = 0;
+
 	//描画に使う頂点バッファをセットします。
 	virtual void BindVertexBuffer(const IVertexBuffer& buffer) = 0;
 
@@ -40,3 +47,8 @@ public:
 };
 
 } //namespace Atlas
+
+/*
+* Project Atlas Graphics Library
+* Copyright (c) 2025 Haruki Kurokawa
+*/

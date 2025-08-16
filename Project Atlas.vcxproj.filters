@@ -77,5 +77,8 @@
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11IndexBuffer.h">
       <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Engine\Common\Vertex.h">
+      <Filter>Engine\Common</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

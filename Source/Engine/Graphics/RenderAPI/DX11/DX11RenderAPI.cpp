@@ -349,7 +349,8 @@ void DX11RenderAPI::BindVertexBuffer(const IVertexBuffer& _buffer)
 {
 	//間違ったAPIのバッファを渡せないように、IVertexBufferはIRenderAPI経由でしか
 	//作成できないようにしているので、static_castしても問題ない。
-	const auto& dx11Buf = static_cast<const DX11VertexBuffer&>(_buffer);
+	
+	/*const auto& dx11Buf = static_cast<const DX11VertexBuffer&>(_buffer);
 	const auto& dx11Impl = static_cast<const DX11VertexBuffer::Impl&>(*dx11Buf.m_impl);
 
 	ID3D11Buffer* buffer = dx11Impl.m_buffer.Get();
@@ -362,7 +363,7 @@ void DX11RenderAPI::BindVertexBuffer(const IVertexBuffer& _buffer)
 		&buffer,
 		&strides,
 		&offset
-	);
+	);*/
 }
 
 void DX11RenderAPI::BindIndexBuffer(const IIndexBuffer& _buffer)
@@ -370,9 +371,7 @@ void DX11RenderAPI::BindIndexBuffer(const IIndexBuffer& _buffer)
 	//間違ったAPIのバッファを渡せないように、IIndexBufferはIRenderAPI経由でしか
 	//作成できないようにしているので、static_castしても問題ない。
 	const auto& dx11Buf = static_cast<const DX11IndexBuffer&>(_buffer);
-	const auto& dx11Impl = static_cast<const DX11IndexBuffer::Impl&>(*dx11Buf.m_impl);
-
-	ID3D11Buffer* buffer = dx11Impl.m_buffer.Get();
+	const auto buffer = dx11Buf.GetRawBuffer();
 
 	m_deviceContext->IASetIndexBuffer(
 		buffer,
@@ -394,4 +393,18 @@ void DX11RenderAPI::BindViewport(const IViewport& _viewport)
 	};
 
 	m_deviceContext->RSSetViewports(1, &viewport);
+}
+
+std::unique_ptr<IVertexBuffer> DX11RenderAPI::CreateVertexBuffer(const Vertices& _vertices)
+{
+	//DX11VertexBufferのコンストラクタはprivateなため、std::make_uniqueは使えない。
+	//friendであるこのクラス内で直接newしてunique_ptrでラップする
+	return std::unique_ptr<DX11VertexBuffer>(new DX11VertexBuffer(_vertices, m_device));
+}
+
+std::unique_ptr<IIndexBuffer> DX11RenderAPI::CreateIndexBuffer(const std::vector<uint32_t>& _indices)
+{
+	//DX11IndexBufferのコンストラクタはprivateなため、std::make_uniqueは使えない。
+	//friendであるこのクラス内で直接newしてunique_ptrでラップする
+	return std::make_unique<DX11IndexBuffer>(new DX11IndexBuffer(_indices, m_device));
 }

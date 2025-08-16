@@ -13,3 +13,8 @@ struct IViewport
 };
 
 } //namespace Atlas
+
+/*
+* Project Atlas Graphics Library
+* Copyright (c) 2025 Haruki Kurokawa
+*/

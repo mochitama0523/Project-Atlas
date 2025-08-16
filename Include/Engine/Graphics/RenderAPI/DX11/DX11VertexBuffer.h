@@ -1,28 +1,30 @@
 #pragma once
 #include "Engine/Graphics/RenderAPI/IVertexBuffer.h"
-#include <vector>
+#include "Engine/Common/Vertex.h"
+#include <memory>
 #include <d3d11_4.h>
 #include <wrl/client.h>
 
 //抽象化されたDirectX11用の頂点バッファ
+//DX11RenderAPIクラスからのみ作成できる。
 
 using Microsoft::WRL::ComPtr;
 
-namespace Atlas
+namespace Atlas {
+
+class DX11RenderAPI;
+
+class DX11VertexBuffer : public IVertexBuffer
 {
-	class DX11RenderAPI;
+private:
+	friend DX11RenderAPI;
 
-	class DX11VertexBuffer : public IVertexBuffer
-	{
-	public:
-		DX11VertexBuffer(const std::vector<Vertex>&, const ComPtr<ID3D11Device>&);
+	DX11VertexBuffer(const Vertices&, const ComPtr<ID3D11Device>&);
+	ID3D11Buffer* GetRawBuffer() const;
+	VertexType GetVertexType() const;
 
-	private:
-		struct Impl : IVertexBuffer::Impl
-		{
-			ComPtr<ID3D11Buffer> m_buffer;
-		};
+	ComPtr<ID3D11Buffer> m_buffer;
+	VertexType m_type;
+};
 
-		friend DX11RenderAPI;
-	};
-}
+} //namespace Atlas

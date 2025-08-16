@@ -1,6 +1,34 @@
 ﻿  DX11RenderAPI.cpp
-C:\Users\makura\デスクトップ\Project Atlas\Project Atlas\Source\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.cpp(350,16): warning C4267: '引数': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
-  IRenderAPI.cpp
-  Test.cpp
-  コードを生成中...
-  Project Atlas.vcxproj -> C:\Users\makura\デスクトップ\Project Atlas\x64\Debug\Project Atlas.exe
+C:\Users\makura\デスクトップ\Project Atlas\Project Atlas\Include\Engine\Graphics\RenderAPI\IViewport.h(9,8): warning C4099: 'Atlas::IViewport': タイプ名は最初 'class' として使われていましたが 'struct' として使われています。
+  (ソース ファイル 'Source/Engine/Graphics/RenderAPI/DX11/DX11RenderAPI.cpp' をコンパイルしています)
+      C:\Users\makura\デスクトップ\Project Atlas\Project Atlas\Include\Engine\Graphics\RenderAPI\IViewport.h(9,8):
+      'Atlas::IViewport' の宣言を確認してください
+  
+C:\Users\makura\デスクトップ\Project Atlas\Project Atlas\Source\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.cpp(337,16): warning C4267: '引数': 'size_t' から 'UINT' に変換しました。データが失われているかもしれません。
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,35): error C2665: 'Atlas::DX11IndexBuffer::DX11IndexBuffer': オーバーロードされた関数ですべての引数の型を変換できませんでした
+  (ソース ファイル 'Source/Engine/Graphics/RenderAPI/DX11/DX11RenderAPI.cpp' をコンパイルしています)
+      C:\Users\makura\デスクトップ\Project Atlas\Project Atlas\Include\Engine\Graphics\RenderAPI\DX11\DX11IndexBuffer.h(24,1):
+      'Atlas::DX11IndexBuffer::DX11IndexBuffer(const Atlas::DX11IndexBuffer &)' の可能性があります
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,35):
+          'Atlas::DX11IndexBuffer::DX11IndexBuffer(const Atlas::DX11IndexBuffer &)': 引数 1 を '_Ty' から 'const Atlas::DX11IndexBuffer &' へ変換できません。
+          with
+          [
+              _Ty=Atlas::DX11IndexBuffer *
+          ]
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,56):
+              理由: '_Ty' から 'const Atlas::DX11IndexBuffer' へは変換できません。
+          with
+          [
+              _Ty=Atlas::DX11IndexBuffer *
+          ]
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,35):
+      引数リスト '(_Ty)' を一致させようとしているとき
+          with
+          [
+              _Ty=Atlas::DX11IndexBuffer *
+          ]
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3630,35):
+      テンプレートインスタンス化コンテキスト (最初に最も古いもの) は
+          C:\Users\makura\デスクトップ\Project Atlas\Project Atlas\Source\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.cpp(402,14):
+          コンパイル対象の関数 テンプレート インスタンス化 'std::unique_ptr<Atlas::DX11IndexBuffer,std::default_delete<Atlas::DX11IndexBuffer>> std::make_unique<Atlas::DX11IndexBuffer,Atlas::DX11IndexBuffer*,0>(Atlas::DX11IndexBuffer *&&)' のリファレンスを確認してください
+  
