@@ -15,8 +15,6 @@ protected:
 private:
 	IIndexBuffer(const IIndexBuffer&) = delete;
 	IIndexBuffer& operator=(const IIndexBuffer&) = delete;
-	IIndexBuffer(IIndexBuffer&&) = delete;
-	IIndexBuffer& operator=(IIndexBuffer&&) = delete;
 };
 
 } //namespace Atlas

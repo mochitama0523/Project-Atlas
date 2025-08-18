@@ -5,11 +5,11 @@
 
 using namespace Atlas;
 
-std::unique_ptr<IRenderAPI> IRenderAPI::Create(BackEnd api)
+std::unique_ptr<IRenderAPI> IRenderAPI::Create(BackEnd _api)
 {
 	using enum BackEnd;
 
-	switch (api)
+	switch (_api)
 	{
 	case DirectX11:
 		return std::make_unique<DX11RenderAPI>();

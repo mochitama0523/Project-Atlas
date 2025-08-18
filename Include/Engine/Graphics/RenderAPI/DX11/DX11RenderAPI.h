@@ -44,6 +44,16 @@ namespace Atlas
 		std::unique_ptr<IVertexBuffer> CreateVertexBuffer(const Vertices& vertices) override;
 		std::unique_ptr<IIndexBuffer> CreateIndexBuffer(const std::vector<uint32_t>& indices) override;
 
+		std::unique_ptr<IShader> CreateShader(ShaderType type, const std::string& filePath) override;
+		void BindShader(const IShader& shader) override;
+
+		std::unique_ptr<IConstantBuffer> CreateConstantBuffer(const std::vector<uint8_t>& data) override;
+		void BindConstantBuffer(const IConstantBuffer& buffer, uint32_t slot) override;
+
+		std::unique_ptr<ITexture> CreateTexture(const std::string& filePath) override;
+
+		void BindTexture(const ITexture& texture, uint32_t slot) override;
+
 	private:
 		//D3D11デバイス、デバイスコンテキストの作成
 		CreateDeviceResult CreateDevice() const;

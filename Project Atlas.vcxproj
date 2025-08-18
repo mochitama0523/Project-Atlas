@@ -144,7 +144,6 @@
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\IRenderAPI.h" />
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\IVertexBuffer.h" />
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\IViewport.h" />
-    <ClInclude Include="Include\Engine\Graphics\RenderAPI\BackEnd.h" />
     <ClInclude Include="Include\Engine\Platform\Win32\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

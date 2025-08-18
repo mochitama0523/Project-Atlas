@@ -1,8 +1,8 @@
 #pragma once
-#include "Engine/Graphics/RenderAPI/BackEnd.h"
 #include "Engine/Common/Vertex.h"
 #include <memory>
 #include <vector>
+#include <string>
 
 //DirectXなどのグラフィックAPIを抽象化し、APIを隠蔽するインターフェイス。
 //CreateメソッドでAPIを選択し、インターフェイスを取得して使用を開始します。
@@ -10,9 +10,23 @@
 namespace Atlas {
 
 class IWindowHandle;
+class IConstantBuffer;
 class IVertexBuffer;
 class IIndexBuffer;
 class IViewport;
+class ITexture;
+class IShader;
+
+enum class BackEnd
+{
+	DirectX11
+};
+
+enum class ShaderType
+{
+	Vertex,
+	Pixel
+};
 
 class IRenderAPI
 {
@@ -44,6 +58,30 @@ public:
 
 	//描画に使うビューポートをセットします。
 	virtual void BindViewport(const IViewport& viewport) = 0;
+
+	//シェーダーオブジェクトを作成します。　
+	virtual std::unique_ptr<IShader> CreateShader(ShaderType type, const std::string& filePath) = 0;
+
+	//描画に使うシェーダーをセットします。
+	virtual void BindShader(const IShader& shader) = 0;
+
+	//定数バッファを作成します。
+	virtual std::unique_ptr<IConstantBuffer> CreateConstantBuffer(const std::vector<uint8_t>& data) = 0;
+
+	//描画に使う定数バッファをセットします。
+	virtual void BindConstantBuffer(const IConstantBuffer& buffer, uint32_t slot) = 0;
+
+	//テクスチャを作成します。
+	virtual std::unique_ptr<ITexture> CreateTexture(const std::string& filePath) = 0;
+
+	//描画に使うテクスチャをセットします。
+	virtual void BindTexture(const ITexture& texture, uint32_t slot) = 0;
+
+	//セットされた情報をもとにインデックスバッファを使用せずに描画します。
+	virtual void Draw(uint32_t vertexCount, uint32_t startLocation) = 0;
+
+	//セットされた情報をもとにインデックスバッファを使用して描画します。
+	virtual void DrawIndexed(uint32_t indexCount, uint32_t startIndexLocation, uint32_t baseVertexLocation) = 0;
 };
 
 } //namespace Atlas
@@ -52,3 +90,4 @@ public:
 * Project Atlas Graphics Library
 * Copyright (c) 2025 Haruki Kurokawa
 */
+

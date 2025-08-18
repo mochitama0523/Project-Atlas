@@ -15,8 +15,6 @@ protected:
 private:
 	IVertexBuffer(const IVertexBuffer&) = delete;
 	IVertexBuffer& operator=(const IVertexBuffer&) = delete;
-	IVertexBuffer(IVertexBuffer&&) = delete;
-	IVertexBuffer& operator=(IVertexBuffer&&) = delete;
 };
 
 } //namespace Atlas
@@ -25,4 +23,3 @@ private:
 * Project Atlas Graphics Library
 * Copyright (c) 2025 Haruki Kurokawa
 */
-

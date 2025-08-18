@@ -68,9 +68,6 @@
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11RenderAPI.h">
       <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Engine\Graphics\RenderAPI\BackEnd.h">
-      <Filter>Engine\Graphics\RenderAPI</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Engine\Graphics\RenderAPI\DX11\DX11VertexBuffer.h">
       <Filter>Engine\Graphics\RenderAPI\DX11</Filter>
     </ClInclude>
