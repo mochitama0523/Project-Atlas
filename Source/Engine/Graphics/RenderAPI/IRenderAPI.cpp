@@ -15,7 +15,7 @@ std::unique_ptr<IRenderAPI> IRenderAPI::Create(BackEnd _api)
 		return std::make_unique<DX11RenderAPI>();
 		break;
 	default:
-		throw std::runtime_error("対応していないグラフィックAPIが選択されました");
+		throw std::runtime_error("対応していないグラフィックAPIが選択されました。");
 		break;
 	}
 }
